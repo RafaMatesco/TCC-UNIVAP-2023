@@ -125,7 +125,5 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
-
-TCC-documentos/~$nografia.docx
 Server/conexao/banco.js
 Server/conexao/bucket.js
