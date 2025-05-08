@@ -6,13 +6,16 @@ const ContainerRelacao = styled.div`
     grid-template-columns: 1fr 1fr 1fr;
 
     border-radius: 10px;
-    background-color: #3d3d3d;
+    background-color: #84b6f4;
     text-align:center;
-    color: white;
+    color: black;
     width:80%;
     padding: 20px;
     margin: 20px;
 
+    @media all and (max-width: 600px) {
+        display: block;
+    }
 
     div{
         justify-self: center;

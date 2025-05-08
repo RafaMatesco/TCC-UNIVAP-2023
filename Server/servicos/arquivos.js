@@ -28,6 +28,7 @@ async function downloadFile(body){
 
     return body.Key
   } catch (err) {
+    console.log(err)
     return false
   }
 }

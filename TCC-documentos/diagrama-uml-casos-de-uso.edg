@@ -423,7 +423,7 @@ FA03FFFDF7F5F606FFFAFAFCFDFEFBFA03FFFDFCFCFB06FF03F803FBFDF8F7F6
 03FFFAFBFCFFFEFBFA7FFF44FF8185899B7A7870A3A09F928E986C6A70817F82
 5558567D7971BEB9B6B6BDC4645E67928F84B0ACA8A1A2A981848A686369C8BE
 B7C2C9CD656C70837D79A6A69DADAAB091969BA89A9ACECFD18C8F979C979084
-89917E70719DA4A57F7C71B9BBBD78757CAFA8A3D3D3D286898D7E79795D5F64
+89917E70719DA4A57F7C71B9BBBD78757CAFA8A84b6f4286898D7E79795D5F64
 8B8179D6D5D6CAD1D5626C728FEF87816F7876B6B0A78A909C918685F8F3ED7F
 FF41FFEB8A818FB4B7B45E5F65A4999C666F797C736F797A7A038A88757374A8
 A9AD5A5B64726F6A5B5856625A5AA2A2A555555EB6AEA6979AA39F9D9E888A92
@@ -2143,7 +2143,7 @@ FigureStyle "Keyword Extend"
   Height 0
   Width 0
   Description "A keyword for a use case association"
-  DefaultText "«extend»"
+  DefaultText "ï¿½extendï¿½"
   FillColor 1,2,3
   TextFormat 0x0044
   Behavior 0x0000000001A241E1
@@ -2161,7 +2161,7 @@ FigureStyle "Keyword Include"
   Height 0
   Width 0
   Description "A keyword for a use case association"
-  DefaultText "«include»"
+  DefaultText "ï¿½includeï¿½"
   FillColor 1,2,3
   TextFormat 0x0044
   Behavior 0x0000000001A241E1
@@ -2272,7 +2272,7 @@ FigureStyle "Actor System"
   Height 202
   Width 358
   Description "An actor that is another system (alternate notation)"
-  DefaultText "«actor»\line "
+  DefaultText "ï¿½actorï¿½\line "
   BorderWidth 3
   TextFormat 0x0022
   Behavior 0x000003F000024E22
@@ -3204,7 +3204,7 @@ ConnectorStyle "Relationship"
 {
   Category "Relationships"
   HasButton TRUE
-  Description "A relationship between use cases, usually «extends» or «includes»"
+  Description "A relationship between use cases, usually ï¿½extendsï¿½ or ï¿½includesï¿½"
   End1 "null"
   End2 "arrow umlstick"
   End1Length 22
@@ -3266,7 +3266,7 @@ Figure 3
 {
   Label TRUE
   Style "Label"
-  Text "Usuario\line cordenação"
+  Text "Usuario\line cordenaï¿½ï¿½o"
   Bounds 217,2043,362,2107
   FillColor 1,2,3
   TextFormat 0x0042
@@ -3294,7 +3294,7 @@ Figure 5
 {
   Label TRUE
   Style "Label"
-  Text "Usuário\line estudante\line "
+  Text "Usuï¿½rio\line estudante\line "
   Bounds 1814,1489,1937,1585
   FillColor 1,2,3
   TextFormat 0x0042
@@ -3638,7 +3638,7 @@ Figure 26
 {
   Label TRUE
   Style "Keyword Extend"
-  Text "«extend»"
+  Text "ï¿½extendï¿½"
   Bounds 1306,1834,1444,1874
   FillColor 1,2,3
   TextFormat 0x0022

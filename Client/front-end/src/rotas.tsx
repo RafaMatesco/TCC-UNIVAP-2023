@@ -1,18 +1,20 @@
-import { Route,Routes} from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom';
 
+import AlteraAtividade from "./pages/AlteraAtividade";
+import Alunos from './pages/Alunos';
+import Atividade from './pages/Atividade';
+import CriaAtividade from "./pages/CriaAtividade";
+import Turmas from "./pages/CriaTurmas";
 import LandingPage from "./pages/LandingPage";
-import LoginAluno from "./pages/loginAluno";
-import LoginProf from "./pages/loginProf";
+import MessagemNotificacao from './pages/MensagemNotificacao';
 import PageAluno from "./pages/PageAluno";
 import PageProf from "./pages/PageProf";
-import CriaAtividade from "./pages/CriaAtividade";
 import PerfilAluno from "./pages/PerfilAluno";
-import AlteraAtividade from "./pages/AlteraAtividade";
-import Turmas from "./pages/CriaTurmas"
-import Relacoes from"./pages/Relacoes"
-import Professores from './pages/Professores';
 import PerfilProf from './pages/PerfilProfessor';
-import Alunos from './pages/Alunos';
+import Professores from './pages/Professores';
+import Relacoes from "./pages/Relacoes";
+import LoginAluno from "./pages/loginAluno";
+import LoginProf from "./pages/loginProf";
 
 
 function rotas(){
@@ -27,7 +29,7 @@ function rotas(){
             <Route Component={ PageProf } path="/pageProf"></Route>
 
             <Route Component={ CriaAtividade } path="/criaAtividade"></Route>
-            <Route Component={ AlteraAtividade } path="/alteraAtividade"></Route>
+            <Route Component={ Atividade } path="/Atividade"></Route>
             <Route Component={ PerfilAluno } path="/perfilAluno"/>
             <Route Component={PerfilProf} path='/perfilProfessor'></Route>
 
@@ -35,6 +37,8 @@ function rotas(){
             <Route Component={Relacoes} path="/relacoes"/>
             <Route Component={Professores} path="/equipeEducacional"/>
             <Route Component={Alunos} path="/alunos"/>
+            <Route Component={AlteraAtividade} path="/alteraAtividade"/>
+            <Route Component={MessagemNotificacao} path="/messagemNotificacao"/>
         </Routes>
     )
 }

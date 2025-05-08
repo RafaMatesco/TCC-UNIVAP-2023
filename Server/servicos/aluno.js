@@ -6,6 +6,7 @@ async function pegarAluno(IDaluno){
     const result = await new Promise((resolve, reject) => {
         con.query(sql, function(erro, result) {
             if (erro) {
+                console.log(erro)
                 reject(erro);
             } else {
                 resolve(result);
@@ -53,11 +54,16 @@ async function criarAluno(body){
     return result
 }
 async function alterarAluno(body){
-    let sql =  `update aluno set nome = "${body.nome}",email = "${body.email}", senha = "${body.senha}", IDturma = ${body.IDturma} where IDaluno = ${body.matricula}`
-
+    
+    let sql =  `update aluno set nome = "${body.nome}", IDturma = ${body.IDturma}`
+    if(body.email!=""){sql+=`,email = "${body.email}"`}
+    if(body.senha!=""){sql+=`, senha = "${body.senha}"`}
+    sql+=` where IDaluno = ${body.matricula}`
+    console.log(sql)
     const result = await new Promise((resolve, reject) => {
         con.query(sql, function(erro, result) {
             if (erro) {
+                console.log(false)
                 resolve(false);
             } else {
                 resolve(true);

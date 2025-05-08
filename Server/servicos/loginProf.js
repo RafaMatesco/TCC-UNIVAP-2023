@@ -6,12 +6,12 @@ async function consultaProf(registro,senha){
         con.query(sql, function(erro, result) {
             if (erro) {
                 reject(erro);
+                console.log(erro)
             } else {
                 resolve(result);
             }
         });
     });
-
     if (result.length > 0) {
         return {
             "permicao": true,

@@ -4,12 +4,12 @@ const path = require("path")
 const con = require("../conexao/banco")
 const { send } = require("process")
 
-async function postFile(rec,res){                                             
+async function postFile(rec,res){
     try{
         const caminho = path.resolve(__dirname, '..', 'tmp', 'uploads')+"/"+rec.file.filename
         const file = fs.readFileSync(caminho)
         const body = {
-            Bucket: 'quadro.de.avisos',
+            Bucket: 'quado.de.avisos',
             Key: rec.file.filename,
             Body: file
         }
@@ -28,11 +28,11 @@ async function postFile(rec,res){
     }
 }
 
-async function getFile(rec,res){                                             
+async function getFile(rec,res){
     try{
         
         const body = {
-            Bucket: 'quadro.de.avisos',
+            Bucket: 'quado.de.avisos',
             Key: rec.query.arquivo,
           };
 

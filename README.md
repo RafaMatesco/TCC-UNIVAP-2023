@@ -40,4 +40,4 @@ Também podem ser adicionadas novas funções, as quais o facebook não faz uso 
 
 ## Database
 
-<img alt="Database" src="TCC-documentos/BD.png"/>
+<img alt="Database" src="TCC-documentos/Diagrama%20do%20banco%20de%20dados.jpg"/>

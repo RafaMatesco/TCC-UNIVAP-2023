@@ -1,49 +1,185 @@
-import React from "react"
-import styled from "styled-components"
-import A from "../A/A"
+import styled from "styled-components";
 
 const ContainerAtividade = styled.div`
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 18% 1fr 1fr;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 1fr;
 
-    border-radius: 5px;
-    background-color: #3d3d3d;
-    text-align:center;
-    color: white;
+  border-radius: 5px;
+  background-color: #84b6f4;
+  text-align: center;
+  color: black;
 
-    min-width: 90%;
-    max-width: 100%;
-    min-height: 95%;
-    max-height: 100%;
+  -webkit-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
+  box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
 
-    padding: 10px;
+  width: 80%;
+  height: 16vh;
+  padding: 10px;
+  padding-bottom: 20px; 
 
-    div{
-        justify-self: center;
-        align-self: center;
-    }
-    .delete{
-        padding-top: 10px;
-        justify-self: end;
-    }
-    
-    //box-shadow:   2px 2px 54px rgb(62, 62, 179), -2px -2px 54px #ffffff;
-    
+  cursor: pointer;
+
+  transition: opacity 500ms;
+  &:hover {
+    opacity: 0.7;
+  }
+  
+  @media all and (max-width: 600px) {
+    width: 90%;
+    margin-bottom:20px;
+  }
+
+`;
+
+const ContainerAtividadeProx = styled(ContainerAtividade)`
+#venc{
+  color: red;
+}
+#text{
+  color: black;
+  background-color: #ffffff94;
+  border-radius: 5px;
+  padding: 2px;
+}
 `
 
-export default function Atividade(prop:{atividade:any, onClick: any}){
+const ContainerAtividadeToday = styled(ContainerAtividadeProx)
+`
+#venc{
+  color: red;
+  
+}
+#text{
+  color: black;
+  background-color: #ffffff94;
+  border-radius: 5px;
+  padding: 2px;
+}
+`
 
+const GridData = styled.div`
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+
+  height: 30px;
+  font-size: 15pt;
+
+  justify-items: end;
+
+  @media all and (max-width: 600px) {
+    font-size: 13pt;
+  }
+`;
+
+const GridAt = styled.div`
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 1fr;
+
+  padding-left: 20px;
+
+  justify-items: start;
+
+  div {
+    font-size: 17pt;
+  }
+  .titulo {
+    font-size: 26pt;
+  }
+
+  @media all and (max-width: 600px) {
+    div {
+    font-size: 14pt;
+  }
+  .titulo {
+    font-size: 23pt;
+  }
+  }
+`;
+
+function addDays(date:any, days:any) {
+  var result = new Date(date);
+  result.setDate(result.getDate() + days);
+  return result;
+}
+
+
+export default function Atividade(prop: { atividade: any; onClick: any }) {
+  var today = new Date()
+  var dateVenc = new Date(prop.atividade.dateVenc)
+  today.setHours(0,0,0,0)
+  var pertoDoVencimento = false 
+  if(addDays(today, 5) >= addDays(dateVenc, 0)){
+      pertoDoVencimento = true
+  }
+  console.log(prop.atividade.nomeTurma)
+  if(dateVenc > today){
+    if(pertoDoVencimento){
+      return (
+        <ContainerAtividadeProx onClick={prop.onClick}>
+          <GridData>
+            <div>
+              Entrega até {prop.atividade.Datavencimento} <br/>  <small id="text">Entrega está próxima!</small>
+            </div>
+          </GridData>
+          <GridAt>
+            <div className="titulo">{prop.atividade.titulo}</div>
+            {prop.atividade.nomeTurma !== "" && (<div>Turma: {prop.atividade.nomeTurma}</div>)}
+            {prop.atividade.nomeTurma === "" && (<div>Postada para alguns alunos</div>)}
+          </GridAt>
+        </ContainerAtividadeProx>
+      );  
+    }else{
+      return (
+        <ContainerAtividadeProx onClick={prop.onClick}>
+          <GridData>
+            <div>
+              Entrega até {prop.atividade.Datavencimento} <br/>  
+            </div>
+          </GridData>
+          <GridAt>
+            <div className="titulo">{prop.atividade.titulo}</div>
+            {prop.atividade.nomeTurma !== "" && (<div>Turma: {prop.atividade.nomeTurma}</div>)}
+            {prop.atividade.nomeTurma === "" && (<div>Postada para alguns alunos</div>)}
+          </GridAt>
+        </ContainerAtividadeProx>
+      );  
+
+    }
+  }else if(dateVenc >= today){
+    return (
+      <ContainerAtividadeProx onClick={prop.onClick}>
+        <GridData>
+          <div>
+            Entrega até {prop.atividade.Datavencimento} <br/>  <small id="text">Vence hoje!</small>
+          </div>
+        </GridData>
+        <GridAt>
+          <div className="titulo">{prop.atividade.titulo}</div>
+          {prop.atividade.nomeTurma !== "" && (<div>Turma: {prop.atividade.nomeTurma}</div>)}
+          {prop.atividade.nomeTurma === "" && (<div>Postada para alguns alunos</div>)}
+        </GridAt>
+      </ContainerAtividadeProx>
+    );  
+
+  }else{
     return(
-        <>
-            <ContainerAtividade onClick={prop.onClick}>
-                <div></div> 
-                <div className="delete"> <A>✏️Editar</A> <A>❌Excluir</A> </div>
-                <div className="titulo" >{prop.atividade.titulo}</div>
-                <div className="dataPostagem">postagem:{prop.atividade.DataPostagem}</div>
-                <div className="nomeTurma">turma: {prop.atividade.nomeTurma}</div>
-                <div className="dataVencimento">entrega:{prop.atividade.Datavencimento}</div>
-            </ContainerAtividade>
-        </>
+      <ContainerAtividadeProx onClick={prop.onClick}>
+        <GridData>
+          <div>
+            Entrega até {prop.atividade.Datavencimento} <br/>  <small id="text" style={{color:"red"}}>Atividade finalizada!</small>
+          </div>
+        </GridData>
+        <GridAt>
+          <div className="titulo">{prop.atividade.titulo}</div>
+          {prop.atividade.nomeTurma !== "" && (<div>Turma: {prop.atividade.nomeTurma}</div>)}
+          {prop.atividade.nomeTurma === "" && (<div>Postada para alguns alunos</div>)}
+        </GridAt>
+      </ContainerAtividadeProx>
     )
-} 
+  }
+  
+}

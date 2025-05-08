@@ -8,7 +8,7 @@ const {loginAluno }= require("../controladores/loginAluno")
  * @swagger
  * /loginAluno:
  *   get:
- *     summary: 
+ *     summary:
  *      - pega aluno especifico
  *     parameters:
  *      - name: matricula

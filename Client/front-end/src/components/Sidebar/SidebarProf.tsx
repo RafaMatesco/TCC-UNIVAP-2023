@@ -7,7 +7,8 @@ import BotaoTurma from "../BotaoTurma/BotaoTurma"
     sidebar: any
  }
 const Container = styled.div<Props>`
-    background-color: #3d3d3d;
+    background-color: #84b6f4;
+    color: black;
     position: fixed;
     height: 100%;
     top: 0px;
@@ -15,15 +16,16 @@ const Container = styled.div<Props>`
     width: 300px;
     left: ${(props)=> props.sidebar ? "0" : "-100%"};
     animation: showSidebar .4s;
-    //box-shadow:  18px 18px 49px rgb(62, 62, 179),-18px -18px 49px #ffffff;
+    box-shadow:   2px 2px 54px #84b6f4, -2px -2px 54px #ffffff; 
     
     svg{
         position: fixed;
-        color: white;
+        color: black;
         width: 30px;
         height: 30px;
         cursor: pointer;
         padding: 10px;
+        margin-left:5%; 
 
         transition: color 500ms;
         &:hover{

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const Form = styled.form`
-  background-color: #3d3d3d;
+  background-color: #84b6f4;
   border-radius: 20px;
   box-sizing: border-box;
   height: 500px;
@@ -13,13 +13,13 @@ const Form = styled.form`
   
   a{
         text-decoration: none;
-        color: white;
-        background-color: rgb(12, 12, 12); 
-        border-radius: 10px;
+        color: black;
+        background-color: white; 
+        border-radius: 10%;
         padding:10px;
         font-size: 20px;
         transition: opacity 500ms;
-        margin-right:100%;
+        margin-right:80%;
     }
     
     a:hover{

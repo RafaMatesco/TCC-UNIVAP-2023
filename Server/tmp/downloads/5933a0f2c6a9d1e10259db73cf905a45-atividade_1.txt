@@ -1,0 +1,35 @@
+Parte 1: Para determinar em que ano o time brasileiro masculino sagrou-se campeão olímpico, precisamos usar a fórmula que você forneceu: r = (af - ai) / (n - 1), onde:
+
+r é o número de torneios olímpicos realizados entre a primeira participação em 1964 e a última em 2000.
+ai é o ano da primeira participação (1964).
+af é o ano da última Olimpíada (2000).
+n é o número de torneios olímpicos.
+Vamos calcular o valor de r:
+
+r = (2000 - 1964) / (n - 1)
+
+Agora, sabemos que r é igual a oito, pois foram realizados mais de oito torneios. Portanto:
+
+8 = (2000 - 1964) / (n - 1)
+
+Agora, podemos resolver essa equação para encontrar o valor de n (o número de torneios):
+
+8 = (36) / (n - 1)
+
+Multiplicando ambos os lados por n - 1:
+
+8(n - 1) = 36
+
+Agora, isole n:
+
+8n - 8 = 36
+
+8n = 44
+
+n = 44 / 8
+
+n = 5,5
+
+Como o número de torneios deve ser um número inteiro, isso significa que o time brasileiro masculino se tornou campeão olímpico no sexto torneio após sua primeira participação, que aconteceu em 1964. Portanto, o time brasileiro masculino sagrou-se campeão olímpico em 1964 + 6 = 1970.
+
+Parte 2: Você mencionou "mínimo múltiplo comum" (MMC), mas não ficou claro como isso se relaciona com o problema apresentado. Se puder fornecer mais informações ou uma pergunta específica sobre o MMC, ficarei feliz em ajudar a esclarecer.

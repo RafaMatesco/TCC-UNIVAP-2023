@@ -21,7 +21,6 @@ async function getLoginAluno(body:{
     registro: string;
     senha: string;
 }) {
-    console.log(body)
     const result = await new Promise((resolve, reject) => {
         back_End.get(`/loginAluno?matricula=${body.registro}&senha=${body.senha}`)
         .then(function(response){
@@ -30,7 +29,6 @@ async function getLoginAluno(body:{
             reject( error)
         })
     });
-    console.log(result)
     return result
 }
 

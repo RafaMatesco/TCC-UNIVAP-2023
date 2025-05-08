@@ -1,5 +1,5 @@
+import { FaTimes } from 'react-icons/fa';
 import styled from "styled-components";
-import {FaTimes} from 'react-icons/fa'
 
 const FileInfo = styled.div`
     display: flex;
@@ -20,13 +20,13 @@ const FileInfo = styled.div`
                 cursor: pointer;
             }
         }
-    }    
+    }
 `
 const nomeArquivo = (arquivo: any)=>{
     if(arquivo.path){
         return arquivo.path
     }
-    return ""
+    return arquivo
 }
 const FileList = (props:{file:any, limpaArquivos:any})=>(
     <FileInfo>

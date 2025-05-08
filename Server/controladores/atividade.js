@@ -1,7 +1,8 @@
-const {pegarAtividadesProf, pegarAtividadesAluno,pegarAtividade,pegarAtividadesRealizadasAluno, postarAtividades, alterarAtividades, excluirAtividades, postarAtividadeRealizada, pegarAtividadesProfArquivadas} = require("../servicos/atividades")
+const {pegarAtividadesProf, pegarAtividadesAluno,pegarAtividade,pegarAtividadesRealizadasAluno, pegarAtividadesVencidasAluno, pegarAtividadesRealizadasProf, postarAtividades, alterarAtividades, excluirAtividades, postarAtividadeRealizada, pegarAtividadesProfArquivadas} = require("../servicos/atividades")
 const {enviarNotificacao} = require("../procedimentos/enviarNotificacao")
+const { pegarMensagemNotificacao } = require("../servicos/equipeEducacional")
   
-async function getAtividadesProf(rec,res){                                                 
+async function getAtividadesProf(rec,res){
     try{
         res.send( await pegarAtividadesProf(rec.query.registro))
     }catch(error)
@@ -10,7 +11,7 @@ async function getAtividadesProf(rec,res){
         res.send(error.message)
     }
 }
-async function getAtividade(rec,res){                                                 
+async function getAtividade(rec,res){
     try{
         res.send( await pegarAtividade(rec.query.IDpostagem))
     }catch(error)
@@ -19,19 +20,19 @@ async function getAtividade(rec,res){
         res.send(error.message)
     }
 }
-async function getAtividadesAluno(rec,res){                                                 
+async function getAtividadesAluno(rec,res){
     try{
-        res.send( await pegarAtividadesAluno(rec.query.turma))
+        res.send( await pegarAtividadesAluno(rec.query.turma, rec.query.matricula))
     }catch(error)
     {
         res.status(500)
         res.send(error.message)
     }
 }
-async function postAtividades(rec,res){                                                 
+async function postAtividades(rec,res){
     try{
         if(await postarAtividades(rec.body)){
-            enviarNotificacao(rec.body.IDTurma, rec.body.titulo)
+            enviarNotificacao(rec.body.IDTurma,rec.body.IDalunos, rec.body.titulo, rec.body.registro)
             res.send(true)
         }
         
@@ -41,7 +42,7 @@ async function postAtividades(rec,res){
         res.send(error.message)
     }
 }
-async function putAtividades(rec,res){                                                 
+async function putAtividades(rec,res){
     try{
         
         res.send( await alterarAtividades(rec.body))
@@ -51,18 +52,19 @@ async function putAtividades(rec,res){
         res.send(error.message)
     }
 }
-async function deleteAtividades(rec,res){                                                 
+async function deleteAtividades(rec,res){
     try{
         
         res.send( await excluirAtividades(rec.query.IDpostagem))
     }catch(error)
     {
+       
         res.status(500)
         res.send(error.message)
     }
 }
 
-async function postMarcarRealizada(rec,res){                                                 
+async function postMarcarRealizada(rec,res){
     try{
         
         res.send( await postarAtividadeRealizada(rec.body))
@@ -72,7 +74,7 @@ async function postMarcarRealizada(rec,res){
         res.send(error.message)
     }
 }
-async function getAtividadeRealizada(rec,res){                                                 
+async function getAtividadeRealizada(rec,res){
     try{
         
         res.send( await pegarAtividadesRealizadasAluno(rec.query.matricula))
@@ -82,10 +84,30 @@ async function getAtividadeRealizada(rec,res){
         res.send(error.message)
     }
 }
-async function getAtividadeProfArquivadas(rec,res){                                                 
+async function getAtividadeVencida(rec,res){
+    try{
+        res.send( await pegarAtividadesVencidasAluno(rec.query.IDturma))
+    }catch(error)
+    {
+        res.status(500)
+        res.send(error.message)
+    }
+}
+async function getAtividadeProfArquivadas(rec,res){
     try{
         
         res.send( await pegarAtividadesProfArquivadas(rec.query.registro))
+    }catch(error)
+    {
+        res.status(500)
+        res.send(error.message)
+    }
+}
+
+async function getAtividadeRealizadaProf(rec,res){
+    try{
+        
+        res.send( await pegarAtividadesRealizadasProf(rec.query.IDpostagem))
     }catch(error)
     {
         res.status(500)
@@ -102,6 +124,8 @@ module.exports = {
     deleteAtividades,
     postMarcarRealizada,
     getAtividadeRealizada,
-    getAtividadeProfArquivadas
+    getAtividadeVencida,
+    getAtividadeProfArquivadas,
+    getAtividadeRealizadaProf
 
 }

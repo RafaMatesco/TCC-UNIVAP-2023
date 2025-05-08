@@ -1,13 +1,12 @@
-import React from "react"
+import { FaTimes } from 'react-icons/fa'
 import styled from "styled-components"
-import {FaTimes} from 'react-icons/fa'
 import BotaoTurma from "../BotaoTurma/BotaoTurma"
 
  interface Props{
     sidebar: any
  }
 const Container = styled.div<Props>`
-    background-color: rgb(62, 62, 179);
+    background-color: #84b6f4 ;
     position: fixed;
     height: 100%;
     top: 0px;
@@ -19,11 +18,12 @@ const Container = styled.div<Props>`
     
     svg{
         position: fixed;
-        color: white;
+        color: black;
+        margin-right: 100%;
         width: 30px;
         height: 30px;
         cursor: pointer;
-        padding: 10px;
+        //padding: 10px;
 
         transition: color 500ms;
         &:hover{

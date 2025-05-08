@@ -19,13 +19,16 @@ async function getRelacoes() {
     const result =  await back_End.get(`turmas/relacoes`)
     return result
 }
-
+async function getAllAlunos(ID:number) {
+    const result =  await back_End.get(`turmas/AllAlunos?IDturma=${ID}`)
+    return result
+}
 async function postRelacao(body: {
     "registro": number,
     "IDturma": number
   }) {
     
-    const result =  await back_End.post('turmas/turmasXprof', body)    
+    const result =  await back_End.post('turmas/turmasXprof', body)
     return result
 }
 
@@ -82,15 +85,8 @@ async function deleteTurma(IDturma:number) {
 
 
 
-export{
-    getTurmasFromProf,
-    getTurmaAluno,
-    getAllTurmas,
-    postTurma,
-    putTurma,
-    deleteTurma,
-    getRelacoes,
-    postRelacao,
-    deleteRelacao
+export {
+    deleteRelacao, deleteTurma, getAllAlunos, getAllTurmas, getRelacoes, getTurmaAluno, getTurmasFromProf, postRelacao, postTurma,
+    putTurma
 }
 

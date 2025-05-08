@@ -11,4 +11,4 @@ const {postFile, getFile} =  require("../controladores/arquivos")
 router.post('/',multer.single('file'),postFile)
 router.get('/', getFile)
 
-module.exports = router 
+module.exports = router

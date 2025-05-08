@@ -2,7 +2,7 @@ const express = require("express")
 
 const router = express.Router()
 
-const {getAtividadesProf,getAtividadeProfArquivadas,getAtividade, postAtividades, getAtividadesAluno, putAtividades, deleteAtividades, postMarcarRealizada, getAtividadeRealizada }= require("../controladores/atividade")
+const {getAtividadesProf,getAtividadeProfArquivadas,getAtividade, postAtividades, getAtividadesAluno, putAtividades, deleteAtividades, postMarcarRealizada, getAtividadeRealizada, getAtividadeVencida, getAtividadeRealizadaProf }= require("../controladores/atividade")
 /**
  * @swagger
  * /atividades:
@@ -146,6 +146,12 @@ router.get('/prof/arquivadas',getAtividadeProfArquivadas )
  *        required: true
  *        schema:
  *          type: integer
+ *      - name: matricula
+ *        in: query
+ *        description: matricula do aluno
+ *        required: true
+ *        schema:
+ *          type: integer
  *     responses:
  *       200:
  *         description: Sucesso
@@ -170,7 +176,7 @@ router.get('/prof/arquivadas',getAtividadeProfArquivadas )
  *                   type: string
  *                 nomeProf:
  *                   type: string
- *       
+ *
  *       400:
  *         description: Erro
  */
@@ -180,7 +186,7 @@ router.get('/aluno',getAtividadesAluno)
  * @swagger
  * /atividades:
  *   post:
- *     summary: 
+ *     summary:
  *      - cria uma nova atividade
  *     requestBody:
  *       content:
@@ -201,11 +207,13 @@ router.get('/aluno',getAtividadesAluno)
  *               dataVencimento:
  *                 type: string
  *               arquivo:
- *                 type: string 
+ *                 type: string
  *               arquivada:
  *                 type: boolean 
  *               registro:
  *                 type: integer 
+ *               IDalunos:
+ *                 type: string
  *     responses:
  *       200:
  *         description: Sucesso
@@ -300,6 +308,10 @@ router.delete('/', deleteAtividades)
  *                 type: integer
  *               matricula:
  *                 type: integer
+ *               texto:
+ *                 type: string
+ *               arquivo:
+ *                 type: string
  *     responses:
  *       200:
  *         description: Sucesso
@@ -337,11 +349,11 @@ router.post('/marcarRealizada', postMarcarRealizada )
  *                 IDpostagem:
  *                   type: integer
  *                 tipoPostagem:
- *                   type: integer 
+ *                   type: integer
  *                 DataPostagem:
- *                   type: string  
+ *                   type: string
  *                 Datavencimento:
- *                   type: string 
+ *                   type: string
  *                 titulo:
  *                   type: string
  *                 texto:
@@ -354,6 +366,89 @@ router.post('/marcarRealizada', postMarcarRealizada )
  *         description: Erro
  */
 router.get('/realizadas', getAtividadeRealizada )
+
+/**
+ * @swagger
+ * /atividades/vencidas:
+ *   get:
+ *     summary: 
+ *      - pega as atividades vencidas da turma
+ *     parameters:
+ *      - name: IDturma
+ *        in: query
+ *        description: id da turma
+ *        required: true
+ *        schema:
+ *          type: integer
+ *     responses:
+ *       200:
+ *         description: Sucesso
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 IDpostagem:
+ *                   type: integer
+ *                 tipoPostagem:
+ *                   type: integer
+ *                 DataPostagem:
+ *                   type: string
+ *                 Datavencimento:
+ *                   type: string
+ *                 titulo:
+ *                   type: string
+ *                 texto:
+ *                   type: string
+ *                 caminhoArquivo:
+ *                   type: string
+ *                 nomeProf:
+ *                   type: string
+ *       400:
+ *         description: Erro
+ */
+router.get('/vencidas', getAtividadeVencida)
+
+/**
+ * @swagger
+ * /atividades/realizadas/prof:
+ *   get:
+ *     summary: 
+ *      - pega todas as respostas de uma atividade
+ *     parameters:
+ *      - name: IDpostagem
+ *        in: query
+ *        description: id da atividade
+ *        required: true
+ *        schema:
+ *          type: integer
+ *     responses:
+ *       200:
+ *         description: Sucesso
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 IDretorno:
+ *                   type: integer
+ *                 IDpostagem:
+ *                   type: integer
+ *                 IDaluno:
+ *                   type: integer
+ *                 texto:
+ *                   type: string
+ *                 arquivo:
+ *                   type: string
+ *                 nomeAluno:
+ *                   type: string
+ *                 dataRetorno:
+ *                   type: string
+ *       400:
+ *         description: Erro
+ */
+router.get('/realizadas/prof', getAtividadeRealizadaProf )
+
 
 module.exports = router
 

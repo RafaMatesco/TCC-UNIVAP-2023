@@ -1,18 +1,21 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
+import Dropzone from 'react-dropzone';
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { Link, Navigate, useNavigate } from "react-router-dom";
-import Dropzone from 'react-dropzone'
 
-import { getTurmasFromProf } from "../servico/turmas";
-import {postArquivo} from "../servico/arquivos"
-import {getAtividade ,putAtividade } from "../servico/atividades"
+import { postArquivo } from "../servico/arquivos";
+import { getAtividade, putAtividade } from "../servico/atividades";
+import { getAllTurmas, getTurmasFromProf } from "../servico/turmas";
 
-import DropContainer from "../components/DropContainer/DropContainer"
-import Nav from "../components/Nav/Nav";
 import Button from "../components/Button/Button";
-import Titulo from "../components/Titulo/Titulo";
+import DropContainer from "../components/DropContainer/DropContainer";
 import FileList from "../components/FileList/FileList";
 import InputType from "../components/InputType/InputType";
+import ListaFuncionalidades from "../components/ListaFuncionalidades/ListaFuncionalidades";
+import Nav from "../components/Nav/Nav";
+import Placeholder from "../components/Placeholder/Placeholder";
+import TextArea from "../components/TextArea/TextArea";
+import Titulo from "../components/Titulo/Titulo";
 
 
 const InputContaineric1 = styled.div`
@@ -21,59 +24,14 @@ const InputContaineric1 = styled.div`
   width: 100%;
   margin-top: 40px;
 `;
-const TextArea = styled.textarea`
-    background-color: #19243b; 
-   color: rgb(255, 255, 255);
-   width: 100%;   
-   margin: 8px 0;  
-   padding: 12px 20px;   
-   display: inline-block; 
-   box-sizing: border-box;
-   border-radius: 10px;
-`
-const Placeholder = styled.label`
-  color: #65657b;
-  font-size: 20px;
-  left: 20px;
-  line-height: 14px;
-  pointer-events: none;
-  position: absolute;
-  transform-origin: 0 50%;
-  transition: transform 200ms, color 200ms;
-  top: 20px;
 
-   ${InputType}:focus ~ &,
-   ${InputType}:not(:placeholder-shown) ~ & {
-        transform: translateY(-30px) translateX(10px) scale(0.75);
-    }
-    
-    ${InputType}:not(:placeholder-shown) ~ & {
-        color: #808097;
-    }
-        
-    ${InputType}:focus ~ & {
-        color: rgba(255, 255, 255);
-    }
 
-    ${TextArea}:focus ~ &,
-   ${TextArea}:not(:placeholder-shown) ~ & {
-        transform: translateY(-30px) translateX(10px) scale(0.75);
-    }
-    
-    ${TextArea}:not(:placeholder-shown) ~ & {
-        color: #808097;
-    }
-        
-    ${TextArea}:focus ~ & {
-        color: rgba(255, 255, 255);
-    }
-`;
 const ContainerForm = styled.div`
-    background-color: rgb(62, 62, 179);
+    background-color: #84b6f4;
     margin: 2%;
     padding: 30px;
     border-radius: 15px;
-    color: white;
+    color: black;
 `
 const Content = styled.div`
     margin: 20px;
@@ -81,7 +39,7 @@ const Content = styled.div`
 const GridBotoes = styled.div`
     margin-top: 100px;
     display: grid;
-    grid-template-areas: 
+    grid-template-areas:
     "turma dataPostagem dataVencimento";
     .turma{
         grid-area: turma;
@@ -104,18 +62,20 @@ const DropMessage = styled.p`
 `
 export default function FormPost(){
     const [turmas,setTurmas] = useState([])
-    const [body, setBody] = useState({IDpostagem:0, tipoPostagem:0, titulo:"", texto:"",IDTurma:0,dataPostagem:"", dataVencimento:"",arquivo:"" })
+    const [body, setBody] = useState({IDpostagem:0, tipoPostagem:0, titulo:"", texto:"",IDturma:0,dataPostagem:"", dataVencimento:"",caminhoArquivo
+    :"",dataPostagemFormatada:"",dataVencimentoFormatada:"",registro:0  })
     const [arquivo, setArquivo] = useState([])
     const [arquivoEscolido, setArquivoEscolido] = useState(false);
     const navigate = useNavigate()
-
-    //setTipoPost({...tipoPost, tipoPost:"Ensino medio", id:1})
+    const cargo = localStorage.getItem("cargo")
+    console.log(body)
     
     const limpaArquivos = ()=>{
         setArquivoEscolido(false)
         setArquivo([])
     }
     const mostraArquivo = ()=>{
+        if(body.caminhoArquivo!=="undefined"){console.log("entro"); return <FileList file={body.caminhoArquivo.substring(33)} limpaArquivos={limpaArquivos}></FileList>}
         if(arquivoEscolido){
             return <FileList file={arquivo[0]} limpaArquivos={limpaArquivos}></FileList>
         }
@@ -128,85 +88,100 @@ export default function FormPost(){
         return <DropMessage>Solte o Arquivo aqui</DropMessage>
     }
     async function carregaTurmas(reg:string){
+        if(localStorage.getItem("cargo") ==="3" ){
+            return await getAllTurmas()
+        }
         return await getTurmasFromProf(reg)
+    }
+    async function carregaAtividade(ID:string){
+        return await getAtividade(ID)
     }
     async function enviaAtividade(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault()
-        const nomeArquivo = await postArquivo(arquivo[0])
-        console.log(nomeArquivo)
-        if (reg != null){
-            const dadosAtividade = {
-                IDpostagem: body.IDpostagem,
-                tipoPostagem: body.tipoPostagem,
-                titulo:body.titulo,
-                texto:body.texto,
-                IDTurma:body.IDTurma,
-                dataPostagem:body.dataPostagem,
-                dataVencimento:body.dataVencimento,
-                arquivo:nomeArquivo,
-                registro:parseInt(reg)
-            }
-            putAtividade(dadosAtividade)
-            navigate("/pageProf")
-            
+        const arq: any = arquivo[0]
+        if(arquivoEscolido ){
+            const nomeArquivo = await postArquivo(arquivo[0])
+            setBody({...body, caminhoArquivo:nomeArquivo})
         }
-
+        
+        putAtividade(body)
+        navigate("/pageProf")
+            
 
     }
+    const mostraOpitionsTurma = ()=>{
+        return(
+                
+            turmas.map((turma:any)=>{
+                if(turma.IDturma!==body.IDturma){
 
+                    return <option value={turma.IDturma}>{turma.nomeTurma}</option>
+                }
+                return <option value={turma.IDturma} selected>{turma.nomeTurma}</option>
+            }))
+    }
     
-    var reg = localStorage.getItem("registro")
+    const mostraOpitionsTipo = ()=>{
+        const tipos = [{value:1, text:"Ensino Tecnico"},{value:2, text:"Ensino Medio"},{value:3, text:"Avisos"}]
+        return(
+                
+            tipos.map((tipo:any)=>{
+               // console.log(turma.IDturma+ "====> "+ body.IDturma)
+                if(tipo.value!==body.tipoPostagem){
+
+                    return <option value={tipo.value}>{tipo.text}</option>
+                }
+                return <option value={tipo.value} selected>{tipo.text}</option>
+            }))
+    }
+    const reg = localStorage.getItem("registro")
+    const IDatividade = localStorage.getItem("atividade")
     useEffect(()=>{
-        if (reg != null) {
-            //recebido = true        
+        if (reg !== null && IDatividade !==null) {
+            //recebido = true
             var resp = carregaTurmas(reg)
             resp.then((dado:any)=>{
                 setTurmas(dado.data)
-            })           
+            })
+            resp = carregaAtividade(IDatividade)
+            resp.then((dado:any)=>{
+                setBody(dado.data[0])
+
+            })
+
         }
 
     },[])
+
     return(
         <>
             <Nav>
-                <ul>
-                    <li> <Link to={'/perfil'}>Perfil</Link> </li>
-                    <li> <Link to={'/PageProf'}>Home</Link></li>
-                </ul>
-               
+                <ListaFuncionalidades cargo={cargo}/>
             </Nav>
             <ContainerForm>
                 <form action="" method="post" onSubmit={enviaAtividade}>
-                    <Titulo>Nova Atividade</Titulo>
+                    <Titulo>Alterar tividade</Titulo>
                     <Content>
-                        <InputContaineric1> 
-                            <InputType 
-                            id="nome" 
+                        <InputContaineric1>
+                            <InputType
+                            id="nome"
                             type="text"
-                            placeholder=" " 
+                            placeholder=" "
                             required
-                            onChange={(event)=> setBody({...body, IDpostagem: parseInt(event.target.value)})}
-                            />
-                            <Placeholder htmlFor="nome" className="placeholder">ID postagem</Placeholder>
-                        </InputContaineric1>
-                        <InputContaineric1> 
-                            <InputType 
-                            id="nome" 
-                            type="text"
-                            placeholder=" " 
-                            required
+                            value={body.titulo}
                             onChange={(event)=> setBody({...body, titulo: event.target.value})}
                             />
                             <Placeholder htmlFor="nome" className="placeholder">Titulo</Placeholder>
                         </InputContaineric1>
                     </Content>
                     <Content>
-                        <InputContaineric1> 
+                        <InputContaineric1>
                             <TextArea
-                            cols={110} 
+                            cols={110}
                             rows={10}
                             onChange={(event)=> setBody({...body, texto: event.target.value})}
-                            required/> 
+                            value={body.texto}
+                            required/>
                             <Placeholder htmlFor="texto" className="placeholder">texto</Placeholder>
                         </InputContaineric1><br />
                     </Content>
@@ -214,29 +189,28 @@ export default function FormPost(){
                         <Content className="turma">
                             <label >Turma: </label>
                             <select name="turma"
-                                id="turma"   
-                                onChange={(event)=> setBody({...body, IDTurma: parseInt(event.target.value)})}
-                                required>
+                                id="turma"
+                                onChange={(event)=> setBody({...body, IDturma: parseInt(event.target.value)})}
+                                required
+                                >
                                 <option>Selecione uma</option>
-                                {turmas.map((turma:any)=>(
-                                <option value={turma.IDturma}>{turma.nomeTurma}</option> 
-                                ))}
+                                {mostraOpitionsTurma()}
                             </select><br />
                             <label >Tipo: </label>
                             <select name="tipoPost"
-                                id="tipoPost"   
+                                id="tipoPost"
                                 onChange={(event)=> setBody({...body, tipoPostagem: parseInt(event.target.value)})}
                                 required>
                                 <option>Selecione um</option>
-                                <option value={1}>Ensino Tecnico</option>
-                                <option value={2}>Ensino Medio</option>
-                                <option value={3}>Avisos</option>
+                                {mostraOpitionsTipo()}
+
                             </select>
                         </Content>
                         <Content className="dataPostagem">
                             <label>Data da postagem</label>
                             <InputType
                             type="date"
+                            value={body.dataPostagemFormatada}
                             onChange={(event)=> setBody({...body, dataPostagem: event.target.value})}
                             required/>
                             
@@ -245,6 +219,7 @@ export default function FormPost(){
                             <label>Data de vencimento</label>
                             <InputType
                             type="date"
+                            value={body.dataVencimentoFormatada}
                             onChange={(event)=> setBody({...body, dataVencimento: event.target.value})}
                             />
                         </Content>
@@ -267,13 +242,10 @@ export default function FormPost(){
                             }
                         </Dropzone>
                         {mostraArquivo()}
- 
-                        
                     </Content>
-                    <Button type="submit">Publicar</Button>
+                    <Button type="submit">Alterar</Button>
                 </form>
             </ContainerForm>
         </>
-        
     )
 }

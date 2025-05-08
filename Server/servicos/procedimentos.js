@@ -59,18 +59,24 @@ async function pegarAtividadesDoDia(){
 }
 
 
-async function pegarAlunosDaTurma(IDaluno){
-    let sql =  `select nome, email from aluno where IDturma = ${IDaluno}`
-    
+async function pegarAlunosDaTurma(IDturma,IDalunos = ""){
+    let sql
+    if(IDturma!=0){
+        sql =  `select nome, email from aluno where IDturma = ${IDturma}`
+    }else{
+        sql = `select a.nome, a.email from aluno a where "${IDalunos}" LIKE CONCAT('%', a.IDaluno, '%');`
+    }
     const result = await new Promise((resolve, reject) => {
         con.query(sql, function(erro, result) {
             if (erro) {
+
                 reject(erro);
             } else {
                 resolve(result);
             }
         })
     })
+    console.log(result)
     if (result.length > 0) {
         return result
     } else {

@@ -2,7 +2,8 @@ import styled from "styled-components"
 import Button from "../Button/Button"
 
 const ButtonTurma = styled(Button)`
-    background-color: #121212;
+    background-color: white;
+    color:black;
 
     width: 80%;
     margin: 5px;

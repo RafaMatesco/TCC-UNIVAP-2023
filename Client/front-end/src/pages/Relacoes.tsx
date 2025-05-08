@@ -10,13 +10,13 @@ import Relacao from "../components/Relacao/Relacao";
 import Button from "../components/Button/Button";
 
 const ContainerForm = styled.div`
-    background-color: #3d3d3d;
+    background-color: #84b6f4;
     margin-left: 20px;
     width: 80%;
     margin: 2%;
     padding: 30px;
     border-radius: 15px;
-    color: white;
+    color: black;
     .titulo{
         text-align: center;
     }
@@ -34,7 +34,7 @@ const BotaoEquipe = styled.p`
         margin-top: 5px;
         margin-left: 30px;
         cursor: pointer;
-        color: white;
+        color: black;
         transition: opacity 500ms;
         &:hover{
             opacity: 0.4;
@@ -76,7 +76,15 @@ const GridContainer = styled.div`
     }
 `
 
-
+const Select = styled.select`
+    background-color:white;
+    color:black;
+    border-radius: 5px;
+    
+    option{
+        font-size: 15pt;
+    }
+`
 
 export default function Relacoes(){
     const cargo = localStorage.getItem('cargo')
@@ -167,30 +175,30 @@ export default function Relacoes(){
         return(
             <ContainerForm>
             <form onSubmit={async(event)=>{submit(event)}}>
-                <Titulo className="titulo">Criar Relacao</Titulo>
+                <Titulo className="titulo">Criar Relação</Titulo>
                 <GridContainer>
                     <Content className="prof">
-                        <label>Professor:</label>
-                        <select 
+                        <label>Professor: </label>
+                        <Select 
                             id="turma" 
                             required
                             onChange={(event)=> setBody({...body, registro: Number(event.target.value)})}>
                                 <option value={0}>Selecione um</option>
                                 {equipeEducacional.map((professor:any)=>(
-                                <option value={professor.registro}>{professor.nomeadm}</option> ))}
-                        </select>
+                                <option value={professor.registro}>{professor.nome}</option> ))}
+                        </Select>
 
                     </Content>
                     <Content className="turma">
-                        <label>Turma:</label>
-                        <select 
+                        <label>Turma: </label>
+                        <Select 
                             id="turma" 
                             required
                             onChange={(event)=> setBody({...body, IDturma: Number(event.target.value)})}>
                                 <option value={0}>Selecione uma</option>
                                 {turmas.map((turma:any)=>(
                                 <option value={turma.IDturma}>{turma.nomeTurma}</option> ))}
-                        </select>
+                        </Select>
 
                     </Content>
                 </GridContainer>

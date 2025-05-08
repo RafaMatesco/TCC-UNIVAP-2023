@@ -1,7 +1,7 @@
 const express = require("express")
 const router = express.Router()
 
-const {getAluno,getAllAlunos, postAluno, putAluno, deleteAluno }= require("../controladores/aluno")
+const {getAluno,getAllAlunos, postAluno, putAluno, deleteAluno, postAlunos }= require("../controladores/aluno")
 /**
  * @swagger
  * /aluno:
@@ -11,7 +11,7 @@ const {getAluno,getAllAlunos, postAluno, putAluno, deleteAluno }= require("../co
  *     parameters:
  *      - name: matricula
  *        in: query
- *        description: matricula do alu o
+ *        description: matricula do aluno
  *        required: true
  *        schema:
  *          type: integer
@@ -26,11 +26,11 @@ const {getAluno,getAllAlunos, postAluno, putAluno, deleteAluno }= require("../co
  *                 IDaluno:
  *                   type: integer
  *                 nome:
- *                   type: string 
+ *                   type: string
  *                 email:
- *                   type: string  
+ *                   type: string
  *                 senha:
- *                   type: string 
+ *                   type: string
  *                 IDturma:
  *                   type: integer
  *                 nomeTurma:
@@ -103,6 +103,41 @@ router.get('/all',getAllAlunos)
  *         description: Erro
  */
 router.post('/',postAluno)
+
+/**
+ * @swagger
+ * /aluno/all:
+ *   post:
+ *     summary: 
+ *      - cria um novo aluno
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               matricula:
+ *                 type: integer
+ *               nome:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *               senha:
+ *                 type: string
+ *               IDturma:
+ *                 type: integer
+ *     responses:
+ *       200:
+ *         description: Sucesso
+ *         content:
+ *           string:
+ *             schema:
+ *                 resp:
+ *                  type: string
+ *       400:
+ *         description: Erro
+ */
+router.post('/all',postAlunos)
 
 /**
  * @swagger

@@ -10,7 +10,7 @@ CREATE TABLE `aluno` (
   `IDaluno` int(8) primary key,
   `nome` varchar(100),
   `email` varchar(100),
-  `senha` varchar(20),
+  `senha` varchar(100),
   `caminhoFoto` varchar(100),
   `IDturma` int(10),
   CONSTRAINT fk_turma 

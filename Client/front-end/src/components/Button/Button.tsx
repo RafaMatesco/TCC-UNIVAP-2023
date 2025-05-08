@@ -1,23 +1,26 @@
 import styled from "styled-components";
 
 const Button = styled.button`
-  background-color: rgb(12, 12, 12);    
+  background-color: white;    
 
-  width: 100%;
+  width: 60%;
   padding: 15px;   
   margin: 10px 0px; 
-  margin-top: 40px;
 
   border: none;   
   cursor: pointer;   
-  border-radius: 10px;
+  border-radius: 5px;
   
   font-size: 20px;
-  color: white;
+  color: black;
   
   transition: opacity 500ms;
   &:hover{
     opacity: 0.8; 
+  }
+  @media all and (max-width: 600px) {
+    width: 100%;
+    margin-left: 10px;
   }
   
   `;

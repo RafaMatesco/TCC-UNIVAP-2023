@@ -1,4 +1,4 @@
-import axios from "axios"
+import axios from "axios";
 
 
 const back_End = axios.create({baseURL:"http://localhost:8080/"})
@@ -32,9 +32,21 @@ async function postAluno(body:{ matricula: number, nome: string, email: string, 
     
 }
 
-
-export{
-    getAluno,
-    getAllAlunos,
-    postAluno
+async function postAlunos(body:{ matricula: number, nome: string, email: string, senha: string, IDturma: number}[]) {
+    
+    return await back_End.post(`aluno/all`,body)
+    
 }
+
+async function putAluno(body:{ matricula: string, nome: string, email: string,senha: string, IDturma: number}) {
+    return await back_End.put(`aluno`,body)
+    
+}
+
+
+
+export {
+    getAllAlunos, getAluno, postAluno,
+    postAlunos, putAluno
+};
+

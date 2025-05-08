@@ -1,10 +1,13 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import styled from "styled-components"
+import { putAluno } from "../../servico/aluno"
+import Button from "../Button/Button"
+import InputType from "../InputType/InputType"
 
 const FormUpdate = styled.form`
 
     label{
-        color: white;
+        color: black;
         display: block;
         margin-top: 50px;
         border-bottom: solid white;
@@ -16,8 +19,8 @@ const FormUpdate = styled.form`
         margin-top: 10px;
         margin-bottom: 20px;
         font-size: 1em;
-        background-color: #121212;
-        color: white;
+        background-color: white;
+        color: black;
         outline: none;
         border-style: none;
         /* border-bottom: solid black; */
@@ -28,19 +31,17 @@ const FormUpdate = styled.form`
     }
     button{
         font-size: 1em;
-        color: white;
+        color: black;
         padding: 10px;
         border-radius: 10px;
-        background-color: #121212;
-        border-style: solid;
-        border-color: black;
+        background-color: white;
         display: block;
         margin-top: 30px;
         cursor: pointer;
         transition: linear 200ms;
     }
     button:hover{
-        background-color: #cccccc9d;
+        background-color: #84b6f4;
     }
     button:focus{
         background-color: #424242ba;
@@ -54,7 +55,7 @@ const FormUpdate = styled.form`
         margin: auto;
     }
     p{
-        color:white;
+        color: black;
         padding: 10px;
         border: solid black 2px;
         border-radius: 10px;
@@ -66,20 +67,41 @@ const FormUpdate = styled.form`
 `
 
 export default function FormPerfil(body:{dados:any}){
-    const [dados, setDados] = useState([])
+    const [email, setEmail] = useState("")
+    const [senha, setSenha] = useState("")
+    const [senha2, setSenha2] = useState("")
     
-    const SalvarDados = (e:any) => {
-        //update no banco de dados
+    const SalvarDados = (e:React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        if(senha===senha2){
+            let senhaRequest = ""
+            if(senha!==""){senhaRequest =senha}
+            const matriculaRequest = localStorage.getItem("matricula")
+            if(matriculaRequest!=null){
+                const bodyRequest ={
+                    matricula:matriculaRequest , nome: body.dados.nome , email: email,senha:senhaRequest, IDturma: body.dados.IDturma
+                }
+                console.log(bodyRequest)
+                putAluno(bodyRequest)
+                window.location.reload();
+            }
+
+           
+        }
+
     }
 
 
     return(
-        <FormUpdate>
+        <FormUpdate onSubmit={(e)=>{SalvarDados(e)}} >
             <label htmlFor="nome">Nome: {body.dados.nome}</label>
 
             <label htmlFor="email">E-mail: {body.dados.email}</label>
-            <input type="email" name="email" id="email" placeholder="Alterar Email" />
-            <button onClick={SalvarDados}>Salvar</button>
+            <InputType name="newEmail" type="email" placeholder="novo email" value={email} onChange={(event)=> setEmail(event.target.value)}/>
+            <label htmlFor="senha">Nova senha:</label>
+            <InputType name="senha" type="password" placeholder="nova senha" value={senha} onChange={(event)=> setSenha(event.target.value)}/>
+            <InputType  type="password" placeholder="confirme a nova senha" value={senha2} onChange={(event)=> setSenha2(event.target.value)}/>
+            <Button type="submit">Salvar</Button>
 
             <div>
                 <p>Turma: {body.dados.nomeTurma}</p>

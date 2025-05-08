@@ -1,19 +1,19 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
-import Nav from "../components/Nav/Nav";
-import ListaFuncionalidades from "../components/ListaFuncionalidades/ListaFuncionalidades";
-import InputType from "../components/InputType/InputType";
 import Button from "../components/Button/Button";
-import {postTurma, getAllTurmas, putTurma, deleteTurma} from"../servico/turmas"
+import InputType from "../components/InputType/InputType";
+import ListaFuncionalidades from "../components/ListaFuncionalidades/ListaFuncionalidades";
+import Nav from "../components/Nav/Nav";
 import Sidebar from "../components/Sidebar/SidebarProf";
 import Titulo from "../components/Titulo/Titulo";
+import { deleteTurma, getAllTurmas, postTurma, putTurma } from "../servico/turmas";
 
 const ContainerForm = styled.div`
-    background-color: #3d3d3d;
+    background-color: #84b6f4;
     margin: 2%;
     padding: 30px;
     border-radius: 15px;
-    color: white;
+    color: black;
     .titulo{
         text-align: center;
     }
@@ -23,6 +23,7 @@ const InputContaineric1 = styled.div`
   position: relative;
   width: 100%;
   margin-top: 40px;
+  
 `;
 const Content = styled.div`
     margin: 20px;
@@ -79,7 +80,7 @@ const BotaoTurma = styled.p`
         margin-top: 5px;
         margin-left: 30px;
         cursor: pointer;
-        color: white;
+        color: black;
         transition: opacity 500ms;
         &:hover{
             opacity: 0.4;
@@ -87,15 +88,6 @@ const BotaoTurma = styled.p`
 `
 const GridContainer = styled.div`
     margin: 80px;
-    display: grid;
-    grid-template-areas: 
-    "turma idTurma";
-    .turma{
-        grid-area: turma;
-    }
-    .idTurma{
-       grid-area : idTurma;
-    }
 `
 const GridBotoes = styled.div`
     display: grid;
@@ -113,9 +105,10 @@ const GridBotoes = styled.div`
     }
 `
 
-const cargo= localStorage.getItem("cargo")
+
 
 export default function CriaTurmas(){
+    const cargo= localStorage.getItem("cargo")
     const [turmas, setTurmas] = useState([])
     const [turmaSelecionada, setTurmaSelecionada] = useState(0)
     const [botao, setBotao] = useState(0)
@@ -125,7 +118,6 @@ export default function CriaTurmas(){
       })
     const [sidebar, setSidebar] = useState(false)
     let resp: any
-
     useEffect(()=>{
         var resp =  getAllTurmas()
         resp.then((dado:any)=>{
@@ -159,7 +151,6 @@ export default function CriaTurmas(){
     const submit = async (event:React.FormEvent<HTMLFormElement>)=>{
         event.preventDefault()
             if(botao ===1){
-                console.log(body)
                 try{
                     resp = await postTurma(body)
                 }catch(error: any)
@@ -195,6 +186,7 @@ export default function CriaTurmas(){
                     }    
                 }
             }
+            window.location.reload()
       }
       const secaoCriaTurma = ()=>{
         return(
@@ -204,6 +196,7 @@ export default function CriaTurmas(){
                 <GridContainer>
                     <Content className="turma">
                         <InputContaineric1> 
+                        <label htmlFor="turma" className="placeholder">Nome da turma</label>
                             <InputType 
                                 id="turma" 
                                 type="text"
@@ -212,11 +205,12 @@ export default function CriaTurmas(){
                                 required
                                 onChange={(event)=> setBody({...body, turma: event.target.value})}
                                 />
-                                <Placeholder htmlFor="nome" className="placeholder">Nome da turma</Placeholder>
+                                
                         </InputContaineric1>
                     </Content>
                     <Content className="idTurma">
                         <InputContaineric1> 
+                        <label htmlFor="id" className="placeholder">ID da turma</label>
                             <InputType 
                                 id="id" 
                                 type="number"
@@ -225,7 +219,7 @@ export default function CriaTurmas(){
                                 value={testaIDvalido()}
                                 onChange={(event)=> alteraID(event)}
                                 />
-                                <Placeholder htmlFor="nome" className="placeholder">id da turma</Placeholder>
+                                
                         </InputContaineric1>
                     </Content>
                 </GridContainer>

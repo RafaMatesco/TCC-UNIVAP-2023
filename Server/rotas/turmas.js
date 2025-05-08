@@ -2,7 +2,7 @@ const express = require("express")
 
 const router = express.Router()
 
-const {getTurmasProf,getRelacoes, postTurmasXprof,deleteTurmasXprof, getTurmaAluno, postTurmas, getTurmas, putTurmas, deleteTurmas}= require("../controladores/turmas")
+const {getTurmasProf,getRelacoes, postTurmasXprof,deleteTurmasXprof, getTurmaAluno, postTurmas, getTurmas, putTurmas, deleteTurmas, getAllAlunos}= require("../controladores/turmas")
 
 /**
  * @swagger
@@ -33,6 +33,7 @@ const {getTurmasProf,getRelacoes, postTurmasXprof,deleteTurmasXprof, getTurmaAlu
  *         description: Erro
  */
 router.get('/prof',getTurmasProf)
+
 /**
  * @swagger
  * /turmas/aluno:
@@ -64,6 +65,37 @@ router.get('/prof',getTurmasProf)
 router.get('/aluno', getTurmaAluno)
 /**
  * @swagger
+ * /turmas/AllAlunos:
+ *   get:
+ *     summary:
+ *      - pega todos os alunos de uma turma
+ *     parameters:
+ *      - name: IDturma
+ *        in: query
+ *        description: id da turma
+ *        required: true
+ *        schema:
+ *          type: integer
+ *     responses:
+ *       200:
+ *         description: Sucesso
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 nomeTurma:
+ *                   type: string
+ *                 IDturma:
+ *                   type: integer
+ *       400:
+ *         description: Erro
+ */
+router.get('/AllAlunos', getAllAlunos)
+
+
+/**
+ * @swagger
  * /turmas/turmasXprof:
  *   post:
  *     summary: 
@@ -90,6 +122,7 @@ router.get('/aluno', getTurmaAluno)
  *         description: Erro
  */
 router.post('/turmasXprof',postTurmasXprof)
+
 /**
  * @swagger
  * /turmas/turmasXprof:
@@ -115,6 +148,7 @@ router.post('/turmasXprof',postTurmasXprof)
  *         description: Erro
  */
 router.delete('/turmasXprof',deleteTurmasXprof)
+
 /**
  * @swagger
  * /turmas:
@@ -145,6 +179,7 @@ router.delete('/turmasXprof',deleteTurmasXprof)
  *         description: Erro
  */
 router.post('/',postTurmas)
+
 /**
  * @swagger
  * /turmas:
@@ -167,6 +202,7 @@ router.post('/',postTurmas)
  *         description: Erro
  */
 router.get('/', getTurmas)
+
 /**
  * @swagger
  * /turmas:
@@ -195,6 +231,7 @@ router.get('/', getTurmas)
  *         description: Erro
  */
 router.put('/',putTurmas )
+
 /**
  * @swagger
  * /turmas:
@@ -220,6 +257,7 @@ router.put('/',putTurmas )
  *         description: Erro
  */
 router.delete('/',deleteTurmas)
+
 /**
  * @swagger
  * /turmas/relacoes:

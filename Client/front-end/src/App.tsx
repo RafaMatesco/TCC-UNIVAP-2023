@@ -5,12 +5,13 @@ import { BrowserRouter } from 'react-router-dom';
 
 const CSSgeral = createGlobalStyle`
   body{
-    background-color: rgb(12,12,12);
+    background-color: white;
     color-scheme: light dark;
     margin: 0;
     padding: 0;
-    color: white;
+    color: black;
     font-size: calc(10px + 2vmin);
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     line-height: 1.5;
     justify-items: center;
     text-align: center;
@@ -23,7 +24,7 @@ const CSSgeral = createGlobalStyle`
 }
 html ::-webkit-scrollbar-thumb {
   border-radius: 50px;
-  background: #3d3d3d;
+  background: #84b6f4;
 }
 html ::-webkit-scrollbar-track {
   background: #121212;

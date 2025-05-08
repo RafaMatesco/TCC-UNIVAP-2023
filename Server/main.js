@@ -15,6 +15,7 @@ const rotaTurmas = require("./rotas/turmas")
 const rotaArquivos = require("./rotas/arquivos")
 const rotaAluno = require("./rotas/aluno")
 const rotaEquipeEducacional = require("./rotas/equipeEducacional")
+const rotaCargos = require("./rotas/cargos")
 
 //procedimentos
 const enviarNotificacao3dias = require('./procedimentos/enviarNotificacao3dias')
@@ -47,6 +48,7 @@ app.use('/turmas',rotaTurmas)
 app.use('/arquivos',rotaArquivos)
 app.use('/aluno',rotaAluno)
 app.use('/equipeEducacional', rotaEquipeEducacional)
+app.use('/cargos',rotaCargos)
 
 //define um procedimento que sera chamado as 8 da manha
 cron.schedule('0 2 * * *', enviarNotificacao3dias)
@@ -58,4 +60,5 @@ cron.schedule('0 0 * * *', enviarNotificacaoDodia)
 
 app.listen(port, ()=>{
     console.log(`Servidor rodando em http://localhost:${port}!`)
+    console.log(`Ver rotas em http://localhost:${port}/api-docs`)
 })

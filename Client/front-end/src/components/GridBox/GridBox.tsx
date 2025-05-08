@@ -1,21 +1,22 @@
 import styled from "styled-components";
 
-const GridBox = styled.a `
-  background-color: rgb(12, 12, 12);
-  color: white;
+const Box = styled.a `
+  background-color: white;
+  color: black;
   
   display: inline;
-  height: 5vh;
+  height: 4vh;
   min-width: 15vw;
 
+  margin:0;
   padding: 10%;
   justify-self: center;
 
-  font-size: 2.5vw;
+  font-size: 30pt;
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   text-decoration: none;
 
-  border-radius: 10px;
+  border-radius: 6px;
 
   img{
     border-radius: 10px;
@@ -37,4 +38,4 @@ const GridBox = styled.a `
 
 `;
 
-export default GridBox;
+export default Box;

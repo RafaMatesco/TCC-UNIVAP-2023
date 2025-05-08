@@ -1,4 +1,0 @@
--aluno sempre logado pra notificação chegar a qualquer hora
--postar atividade para alunos específicos
--arquivar atividades já postadas
--professor ver quem entregou e nnão entregou

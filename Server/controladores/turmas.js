@@ -1,4 +1,4 @@
-const {pegarTurmasProf,pegarRelacoes, postarTurmasProf, excluirTurmasProf,pegarTurmaAluno, postarTurmas, pegarTurmas, alterarTurmas, excluirTurmas } = require("../servicos/turmas")
+const {pegarTurmasProf,pegarRelacoes, postarTurmasProf, excluirTurmasProf,pegarTurmaAluno, postarTurmas, pegarTurmas, alterarTurmas, excluirTurmas,pegarAllAlunos } = require("../servicos/turmas")
 
 async function getTurmasProf(rec,res){  //pega as turmas que estao relacionadas com o professor                                           
     try{
@@ -9,7 +9,7 @@ async function getTurmasProf(rec,res){  //pega as turmas que estao relacionadas 
         res.send(error.message)
     }
 }
-async function getRelacoes(rec,res){  //pega as turmas que estao relacionadas com o professor                                           
+async function getRelacoes(rec,res){  //pega as turmas que estao relacionadas com o professor
     try{
         res.send( await pegarRelacoes())
     }catch(error)
@@ -18,7 +18,7 @@ async function getRelacoes(rec,res){  //pega as turmas que estao relacionadas co
         res.send(error.message)
     }
 }
-async function postTurmasXprof(rec,res){    // cria a relação de uma turma com um professor                                              
+async function postTurmasXprof(rec,res){    // cria a relação de uma turma com um professor
     try{
         res.send( await postarTurmasProf(rec.body))
     }catch(error)
@@ -45,7 +45,7 @@ async function getTurmaAluno(rec,res){      // pega a turma que um aluno pertenc
     }
 }
 
-async function postTurmas(rec,res){     //cria uma turma                                              
+async function postTurmas(rec,res){     //cria uma turma
     try{
         res.send(await postarTurmas(rec.body))
         
@@ -81,7 +81,7 @@ async function putTurmas(rec,res){    // altera uma turma
         res.send(error.message)
     }
 }
-async function deleteTurmas(rec,res){     // deleta uma turma                                          
+async function deleteTurmas(rec,res){     // deleta uma turma
     try{
         res.send( await excluirTurmas(rec.query.IDturma))
     }catch(error)
@@ -94,6 +94,15 @@ async function deleteTurmas(rec,res){     // deleta uma turma
         res.send(error.message)
     }
 }
+async function getAllAlunos(rec,res){
+    try{
+        res.send(await pegarAllAlunos(rec.query.IDturma) )
+    }catch(error){
+        res.status(500)
+        res.send(error.message)
+
+    }
+}
 
 module.exports = {
     getTurmasProf,
@@ -104,5 +113,6 @@ module.exports = {
     getTurmas,
     putTurmas,
     deleteTurmas,
-    getRelacoes
+    getRelacoes,
+    getAllAlunos
 }

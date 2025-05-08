@@ -1,14 +1,12 @@
-import React, {useState} from "react";
-import styled from "styled-components";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import styled from "styled-components";
 
-import InputType from "../InputType/InputType";
 import Button from "../Button/Button";
 import Form from "../Form/Form";
+import InputType from "../InputType/InputType";
 
-import {getLoginProf, getLoginAluno} from "../../servico/logins"
-
-
+import { getLoginAluno, getLoginProf } from "../../servico/logins";
 
 const InputContaineric1 = styled.div`
   height: 50px;
@@ -37,7 +35,7 @@ const Cut = styled.div`
   ${InputType}:not(:placeholder-shown) ~ & {transform: translateY(8px);}
 `;
 const Placeholder = styled.label`
-  color: #ffffff;
+  color: black;
   font-size: 20px;
   left: 20px;
   line-height: 14px;
@@ -57,46 +55,67 @@ const Placeholder = styled.label`
     }
         
     ${InputType}:focus ~ & {
-        color: rgba(255, 255, 255);
+        color: black;
     }
 `;
-const Titulo = styled.h3`
+const Titulo = styled.p`
+    font-size: 25pt;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    color: white;
+    color: black;
 `;
+
+
 
 export default function FormularioLogin(props: {tipoLogin:string }){
     var titulo = "..."
     var submit = "/"
     var resp :any
 
-    //muda o titulo do formulario e a rota de envio caso seja aluno ou professor
-    if(props.tipoLogin === "matricula"){
-        titulo = "Aluno";
-        submit = "/PageAluno";
-    }else if(props.tipoLogin === "Registro"){
-        titulo = "Professor";
-        submit = "/PageProf";
-    }
-
     const [body, setBody] = useState({registro:"",senha:""})
     const navigate = useNavigate(); //variável para alteracão da rota
+
+    const checkLogin = async ()=> {
+        if(props.tipoLogin === "matricula"){
+            titulo = "Aluno"
+            submit = "/PageAluno"
+            const matriculaStorage = localStorage.getItem("matricula")
+            const senhaAlunoStorage = localStorage.getItem("senhaAluno")
+            if(matriculaStorage != null && senhaAlunoStorage != null){
+                resp = await getLoginAluno({registro: matriculaStorage, senha: senhaAlunoStorage});//puxa os dados do back-end
+                navigate(submit, resp)
+            }  
+        }else{
+            titulo = "Professor"
+            submit = "/PageProf"
+            const registroStorage = localStorage.getItem("registro")
+            const senhaProfStorage = localStorage.getItem("senhaProf")
+            if(registroStorage != null && senhaProfStorage != null){
+                resp = await getLoginProf({registro: registroStorage, senha: senhaProfStorage});//puxa os dados do back-end
+                navigate(submit, resp)
+            }
+        }
+    }
+    checkLogin()
 
     return(
             <Form onSubmit={async (event)=>{
                 event.preventDefault()
                 if(props.tipoLogin === "matricula"){
-                    resp = await getLoginAluno(body);//Envia dados pro back-end
+                    resp = await getLoginAluno(body);//puxa os dados do back-end   
                 }else{
-                    resp = await getLoginProf(body);//Envia dados pro back-end
+                    resp = await getLoginProf(body);//puxa os dados do back-end
                 }
-                if(resp.permicao || resp){ //testa se dados enviados estão corretos e redireciona a rota
 
-
-                    localStorage.clear();
-                    localStorage.setItem("registro", body.registro);
-                    localStorage.setItem("senha", body.senha);
-                    localStorage.setItem("cargo", resp.cargo);
+                if(resp.permicao || resp){
+                    //testa se dados enviados estão corretos e redireciona a rota
+                    if(props.tipoLogin === "matricula"){
+                        localStorage.setItem("matricula", body.registro)
+                        localStorage.setItem("senhaAluno", body.senha)
+                    }else if(props.tipoLogin === "Registro"){
+                        localStorage.setItem("registro", body.registro)
+                        localStorage.setItem("senhaProf", body.senha)
+                        localStorage.setItem("cargo", resp.cargo)
+                    }
 
                     navigate(submit, resp);
 
@@ -104,30 +123,30 @@ export default function FormularioLogin(props: {tipoLogin:string }){
                     alert("Usuário ou senha incorretos");
                 }
             }}>
-                <Titulo>Logar como {titulo}</Titulo>
-                <InputContaineric1> 
-                    <InputType 
-                    id="nome" 
+                <Titulo><b>{titulo}</b></Titulo>
+                <InputContaineric1>
+                    <Cut></Cut>
+                    <InputType
+                    id="nome"
                     type="text"
-                    placeholder=" " 
+                    placeholder=" "
                     required
                     onChange={(event)=> setBody({...body, registro: event.target.value})}
                     />
-                    <Cut></Cut>
                     <Placeholder htmlFor="nome" className="placeholder">{props.tipoLogin}</Placeholder>
                 </InputContaineric1>
 
                 <InputContaineric2> 
                     <Cut></Cut>
-                    <InputType 
+                    <InputType
                     id="senha" 
-                    type="password" 
-                    placeholder=" " 
+                    type="password"
+                    placeholder=" "
                     required
                     onChange={(event)=> setBody({...body, senha: event.target.value})}/>
                     <Placeholder htmlFor="senha" className="placeholder">Senha</Placeholder>
                 </InputContaineric2>
-                <Button type="submit">Login</Button> <br/> <br/> 
+                <Button type="submit">Entrar</Button> <br/> <br/> 
                 <Link to={"/"}>Voltar</Link>
             </Form>
     )

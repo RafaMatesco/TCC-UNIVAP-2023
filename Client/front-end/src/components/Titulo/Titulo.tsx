@@ -1,8 +1,9 @@
 import styled from "styled-components";
 
-const Titulo = styled.h3`
+const Titulo = styled.div`
+    font-size: 35px;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    color: white;
+    color: black;
 `;
 
 export default Titulo

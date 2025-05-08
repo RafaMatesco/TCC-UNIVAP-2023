@@ -3,8 +3,8 @@ import styled from "styled-components";
 const A = styled.a`
         a{
           text-decoration: none;
-          color: white;
-          background-color: rgb(62, 62, 179);
+          color: black;
+          background-color: white;
           border-radius: 10px;
           padding:10px;
           font-size: 20px;
